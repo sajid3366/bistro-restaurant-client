@@ -1,4 +1,3 @@
-import React from 'react';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import featuredImg from '../../assets/home/featured.jpg'
 import './Featured.css'
@@ -18,7 +17,7 @@ const Featured = () => {
                     <p>March 20, 2023</p>
                     <p className='uppercase'>Where can i get some</p>
                     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut, quidem vel? Nostrum eius ipsum sed voluptatem, recusandae dolorum explicabo voluptatibus!</p>
-                    <button className="btn btn-outline border-0 border-b-2">Default</button>
+                    <button className="btn btn-outline border-0 border-b-2">Order Now</button>
 
                 </div>
             </div>
