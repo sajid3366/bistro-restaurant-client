@@ -1,63 +1,55 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { AuthContext } from '../../providers/AuthProvider';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { Link, Navigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
-const Login = () => {
-    const captchaRef = useRef(null);
-    console.log(captchaRef);
-    const [disabled, setDisabled] = useState(true);
-    const { logIn } = useContext(AuthContext)
+const Signup = () => {
 
-    useEffect(() => {
-        loadCaptchaEnginge(6);
-    }, [])
 
-    const handleLogin = e => {
+    const { creatUser } = useContext(AuthContext)
+
+    const handleSuignup = e => {
         e.preventDefault();
         const form = e.target;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        const user = { email, password }
+        const user = { name, email, password }
         console.log(user);
-        logIn(email, password)
+        creatUser(email, password)
             .then(result => {
                 console.log(result.user);
+                <Navigate to="/"></Navigate>
             })
             .catch(err => {
                 console.log(err);
             })
-    }
 
-    const handleValidateCaptcha = () => {
-        const value = captchaRef.current.value;
-        console.log(value);
-        if (validateCaptcha(value)) {
-            setDisabled(false)
-        }
-        else {
-            setDisabled(true)
-        }
     }
     return (
         <>
             <Helmet>
-                <title>Bistro | Login</title>
+                <title>Bistro | SignUp</title>
             </Helmet>
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content flex-col lg:flex-row">
                     <div className="w-1/3 text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Login now!</h1>
+                        <h1 className="text-5xl font-bold">Sign Up now!</h1>
                         <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                     </div>
                     <div className="card flex-shrink-0 w-2/3 max-w-sm shadow-2xl bg-base-100">
-                        <form onSubmit={handleLogin} className="card-body">
+                        <form onSubmit={handleSuignup} className="card-body">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Name</span>
+                                </label>
+                                <input type="text" name="name" placeholder="Name" className="input input-bordered" required />
+                            </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" name="email" placeholder="email" className="input input-bordered" required />
+                                <input type="email" name="email" placeholder="Email" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -68,17 +60,10 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <LoadCanvasTemplate />
-                                </label>
-                                <input type="text" ref={captchaRef} name="captcha" placeholder="type here" className="input input-bordered" required />
-                                <button onClick={handleValidateCaptcha} className='btn btn-xs btn-outline'>Validate</button>
+                            <p>Have a account <Link to="/login">Login</Link></p>
 
-                            </div>
-                            <p>Do not have account <Link to="/signup">Signup</Link></p>
                             <div className="form-control mt-6">
-                                <input disabled={disabled} type="submit" className="btn btn-outline" value="Login" />
+                                <input type="submit" className="btn btn-outline" value="SignUp" />
                             </div>
                         </form>
                     </div>
@@ -88,4 +73,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;
