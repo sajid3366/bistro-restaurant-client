@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import Swal from "sweetalert2";
 
 const Signup = () => {
 
-
-    const { creatUser } = useContext(AuthContext)
+    const navigate = useNavigate() 
+    const { creatUser,updateUserProfile, logOut } = useContext(AuthContext)
 
     const handleSuignup = e => {
         e.preventDefault();
@@ -14,12 +15,22 @@ const Signup = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        const user = { name, email, password }
+        const photo = form.photo.value;
+        const user = { name,photo, email, password }
         console.log(user);
         creatUser(email, password)
             .then(result => {
                 console.log(result.user);
-                <Navigate to="/"></Navigate>
+                Swal.fire({
+                    title: "Good job!",
+                    text: "You clicked the button!",
+                    icon: "success"
+                });
+                updateUserProfile(name, photo);
+                logOut()
+                .then(() =>{
+                    navigate("/login")
+                })
             })
             .catch(err => {
                 console.log(err);
@@ -43,7 +54,13 @@ const Signup = () => {
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" name="name" placeholder="Name" className="input input-bordered" required />
+                                <input  type="text" name="name" placeholder="Name" className="input input-bordered" required />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input type="text" name="photo" placeholder="Photo URL" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
