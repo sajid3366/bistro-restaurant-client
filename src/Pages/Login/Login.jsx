@@ -83,12 +83,12 @@ const Login = () => {
                                 <label className="label">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input onBlur={handleValidateCaptcha} type="text" ref={captchaRef} name="captcha" placeholder="type here" className="input input-bordered" required />
+                                <input onBlur={handleValidateCaptcha} type="text" ref={captchaRef} name="captcha" placeholder="type here" className="input input-bordered"  />
 
                             </div>
                             <p>Do not have account <Link to="/signup">Signup</Link></p>
                             <div className="form-control mt-6">
-                                <input disabled={disabled} type="submit" className="btn btn-outline" value="Login" />
+                                <input disabled={false} type="submit" className="btn btn-outline" value="Login" />
                             </div>
                         </form>
                     </div>

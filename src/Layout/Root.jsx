@@ -6,7 +6,7 @@ const Root = () => {
     const location = useLocation();
     const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('signup');
     return (
-        <div className='max-w-7xl mx-auto'>
+        <div>
            {noHeaderFooter || <Navbar></Navbar>}
             <Outlet></Outlet>
             {noHeaderFooter || <Footer></Footer>}
