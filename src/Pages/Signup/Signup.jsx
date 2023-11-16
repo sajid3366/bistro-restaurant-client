@@ -3,11 +3,13 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Signup = () => {
 
-    const navigate = useNavigate() 
-    const { creatUser,updateUserProfile, logOut } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const { creatUser, updateUserProfile, logOut } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
 
     const handleSuignup = e => {
         e.preventDefault();
@@ -16,21 +18,32 @@ const Signup = () => {
         const email = form.email.value;
         const password = form.password.value;
         const photo = form.photo.value;
-        const user = { name,photo, email, password }
+        const user = { name, photo, email, password }
         console.log(user);
         creatUser(email, password)
             .then(result => {
                 console.log(result.user);
-                Swal.fire({
-                    title: "Good job!",
-                    text: "You clicked the button!",
-                    icon: "success"
-                });
-                updateUserProfile(name, photo);
-                logOut()
-                .then(() =>{
-                    navigate("/login")
-                })
+                const userInfo = {
+                    name: name,
+                    email: email
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            console.log("user added to database");
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "You clicked the button!",
+                                icon: "success"
+                            });
+                            updateUserProfile(name, photo);
+                            logOut()
+                                .then(() => {
+                                    navigate("/login")
+                                })
+                        }
+                    })
+
             })
             .catch(err => {
                 console.log(err);
@@ -54,7 +67,7 @@ const Signup = () => {
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input  type="text" name="name" placeholder="Name" className="input input-bordered" required />
+                                <input type="text" name="name" placeholder="Name" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">

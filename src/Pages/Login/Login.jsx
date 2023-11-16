@@ -1,23 +1,26 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { AuthContext } from '../../providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const Login = () => {
     const captchaRef = useRef(null);
     console.log(captchaRef);
     const [disabled, setDisabled] = useState(true);
-    const { logIn } = useContext(AuthContext)
+    const { logIn } = useAuth()
 
     const location = useLocation()
     const navigate = useNavigate()
-    
+
     console.log(location);
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
+
+    
 
     const handleLogin = e => {
         e.preventDefault();
@@ -83,9 +86,10 @@ const Login = () => {
                                 <label className="label">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input onBlur={handleValidateCaptcha} type="text" ref={captchaRef} name="captcha" placeholder="type here" className="input input-bordered"  />
+                                <input onBlur={handleValidateCaptcha} type="text" ref={captchaRef} name="captcha" placeholder="type here" className="input input-bordered" />
 
                             </div>
+                            <SocialLogin></SocialLogin>
                             <p>Do not have account <Link to="/signup">Signup</Link></p>
                             <div className="form-control mt-6">
                                 <input disabled={false} type="submit" className="btn btn-outline" value="Login" />
