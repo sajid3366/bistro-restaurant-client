@@ -14,6 +14,7 @@ import AddItems from "../Pages/DashBoard/AddItems/AddItems";
 import AdminRoute from "../providers/AdminRoute";
 import ManageItems from "../Pages/DashBoard/ManageItems/ManageItems";
 import UpdateItem from "../Pages/DashBoard/UpdateItem/UpdateItem";
+import Payment from "../Pages/DashBoard/Payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -56,6 +57,12 @@ const router = createBrowserRouter([
                 path: "cart",
                 element: <Cart></Cart>
             },
+            {
+                path: 'payment',
+                element: <Payment></Payment>
+            },
+
+            
             // for only admins
             {
                 path: 'addItem',
