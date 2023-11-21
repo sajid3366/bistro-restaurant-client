@@ -8,14 +8,14 @@ import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const Login = () => {
     const captchaRef = useRef(null);
-    console.log(captchaRef);
+    // console.log(captchaRef);
     const [disabled, setDisabled] = useState(true);
     const { logIn } = useAuth()
 
     const location = useLocation()
     const navigate = useNavigate()
 
-    console.log(location);
+    // console.log(location);
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
